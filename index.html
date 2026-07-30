@@ -349,13 +349,37 @@
         <!-- <p class="tickets-subtitle fade-in">
           Naciśnij na kafelek, aby przeczytać szczegóły
         </p> -->
-        <p class="tickets-subtitle fade-in">
-          Lista wystawców zostanie ogłoszona już niedługo!
-          <br />
-          <br />
-          Sprawdzajcie nasze social media, by być na bieżąco.
-        </p>
-        <div class="dealers-grid" id="dealersGrid"></div>
+        <div class="denmap fade-in" id="denMap">
+          <div class="denmap-plan">
+            <div class="denmap-plan-inner">
+              <svg
+                id="denMapSvg"
+                class="denmap-svg"
+                viewBox="0 -4 69 186"
+                preserveAspectRatio="xMidYMid meet"
+                role="group"
+                aria-label="Plan Dealer's Den"
+              ></svg>
+              <div class="denmap-tooltip" id="denTooltip" hidden></div>
+            </div>
+            <div class="denmap-entrance">
+              <span aria-hidden="true">&#9650;</span> Wejście do Hali
+            </div>
+          </div>
+
+          <div class="denmap-side">
+            <div class="denmap-detail" id="denDetail" aria-live="polite"></div>
+            <input
+              type="search"
+              id="denSearch"
+              class="denmap-search"
+              placeholder="Szukaj wystawcy lub opisu..."
+              aria-label="Szukaj wystawcy"
+              autocomplete="off"
+            />
+            <ol class="denmap-list" id="denList"></ol>
+          </div>
+        </div>
       </div>
     </section>
 

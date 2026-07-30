@@ -1,11 +1,94 @@
 :root {
+  /* kolory */
   --red: #e83857;
+  --red-dark: #d62d4c;
   --teal: #03a8a8;
+  --teal-dark: #026e6e;
   --black: #000000;
   --white: #ffffff;
   --gold: #f2c778;
+  --gold-dark: #e5b85a;
   --green: #178c38;
   --pink: #f2bacf;
+
+  --grey-100: #eeeeee;
+  --grey-200: #dcdcdc;
+  --grey-500: #888888;
+  --grey-700: #444444;
+
+  /* jasne warstwy na kolorowym tle sekcji */
+  --surface-soft: rgba(255, 255, 255, 0.1);
+  --surface-strong: rgba(255, 255, 255, 0.25);
+  --border-soft: rgba(255, 255, 255, 0.35);
+  --border-strong: rgba(255, 255, 255, 0.5);
+
+  /* odstępy - jedna skala na całą stronę */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-section: 6rem;
+
+  /* rozmiary tekstu */
+  --fs-xs: 0.8rem;
+  --fs-sm: 0.95rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.15rem;
+  --fs-xl: 1.4rem;
+  --fs-2xl: 1.6rem;
+  --fs-3xl: 1.8rem;
+  --fs-display: clamp(1.9rem, 4vw, 2.6rem);
+  --fs-heading: clamp(2.5rem, 5vw, 4rem);
+  --fs-hero-date: clamp(1.8rem, 4vw, 3.5rem);
+  --fs-hero-sub: clamp(1rem, 2vw, 1.4rem);
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.5;
+  --lh-body: 1.7;
+
+  --ls-base: 1px;
+  --ls-wide: 3px;
+
+  /* zaokrąglenia - squircle zamiast zwykłego łuku */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --squircle: superellipse(2);
+
+  /* cienie */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 6px 25px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  /* przejścia */
+  --t-fast: 0.15s ease;
+  --t-base: 0.2s ease;
+  --t-slow: 0.3s ease;
+  --t-reveal: 0.7s ease;
+
+  /* szerokości treści */
+  --content-max: 1100px;
+  --content-narrow: 800px;
+  --measure: 600px;
+  --measure-sm: 500px;
+
+  /* dekoracyjne ilustracje w tle sekcji */
+  --doodle-w: 25vw;
+  --doodle-max: 300px;
+  --doodle-w-lg: 30vw;
+  --doodle-max-lg: 380px;
+
+  /* ikony rysowane maską, żeby dziedziczyły kolor */
+  --icon-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 6 18 18M18 6 6 18' stroke='%23000' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+
+  /* plan Dealer's Denu */
+  --denmap-plan-w: 300px;
+  --denmap-detail-h: 17rem;
+  --fade-size: 2.5rem;
 }
 
 * {
@@ -43,19 +126,19 @@ h3,
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 0.8rem 2rem;
+  padding: var(--sp-3) var(--sp-6);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    background var(--t-slow),
+    box-shadow var(--t-slow);
 }
 
 .nav.scrolled {
   background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-logo {
@@ -65,7 +148,7 @@ h3,
 
 .nav-links {
   display: flex;
-  gap: 1.8rem;
+  gap: var(--sp-5);
   list-style: none;
   align-items: center;
 }
@@ -73,9 +156,9 @@ h3,
 .nav-link {
   color: var(--white);
   text-decoration: none;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  transition: color 0.2s ease;
+  font-size: var(--fs-md);
+  letter-spacing: var(--ls-base);
+  transition: color var(--t-base);
   text-transform: uppercase;
 }
 
@@ -86,16 +169,16 @@ h3,
 .nav-btn-gold {
   background: var(--gold);
   color: var(--black) !important;
-  padding: 0.5rem 1.2rem;
-  border-radius: 50px;
-  corner-shape: superellipse(2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  corner-shape: var(--squircle);
   transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+    background var(--t-base),
+    transform var(--t-base);
 }
 
 .nav-btn-gold:hover {
-  background: #e5b85a;
+  background: var(--gold-dark);
   color: var(--black) !important;
   transform: translateY(-1px);
 }
@@ -113,7 +196,7 @@ h3,
   height: 3px;
   background: var(--white);
   border-radius: 2px;
-  transition: 0.3s ease;
+  transition: var(--t-slow);
 }
 
 .section {
@@ -125,13 +208,39 @@ h3,
   overflow: hidden;
 }
 
+/* wspólny blok treści sekcji */
+.about-content,
+.join-content,
+.program-content,
+.dealers-content,
+.tickets-content,
+.contact-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--sp-section) var(--sp-6);
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.about-content h2,
+.join-content h2,
+.program-content h2,
+.dealers-content h2,
+.tickets-content h2,
+.contact-content h2,
+.faq-content h2 {
+  font-size: var(--fs-heading);
+  line-height: var(--lh-tight);
+}
+
 /* hero */
 .hero {
   background: var(--red);
   color: var(--white);
   text-align: center;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--sp-5);
 }
 
 .hero-logotype {
@@ -144,58 +253,75 @@ h3,
 
 .hero-date {
   font-family: "Luckiest Guy", cursive;
-  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  font-size: var(--fs-hero-date);
   color: var(--white);
   position: relative;
   z-index: 2;
-  letter-spacing: 2px;
+  letter-spacing: var(--ls-base);
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: var(--fs-hero-sub);
   font-weight: 300;
-  letter-spacing: 3px;
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   position: relative;
   z-index: 2;
 }
 
 .hero-cta {
-  margin-top: 1rem;
+  margin-top: var(--sp-4);
   position: relative;
   z-index: 2;
 }
 
-.hero-illustration-right {
+/* dekoracyjne ilustracje - wspólna warstwa, dwa rozmiary */
+.hero-illustration-right,
+.tickets-doodle,
+.program-illustration,
+.faq-illustration {
   position: absolute;
-  right: 0;
   bottom: 0;
-  width: 30vw;
-  max-width: 380px;
   z-index: 1;
   pointer-events: none;
+}
+
+.hero-illustration-right,
+.tickets-doodle {
+  width: var(--doodle-w-lg);
+  max-width: var(--doodle-max-lg);
+}
+
+.program-illustration,
+.faq-illustration {
+  width: var(--doodle-w);
+  max-width: var(--doodle-max);
+}
+
+.hero-illustration-right {
+  right: 0;
 }
 
 /* buttons */
 .btn {
   display: inline-block;
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
+  padding: var(--sp-4) var(--sp-6);
+  font-size: var(--fs-lg);
   text-decoration: none;
-  border-radius: 50px;
-  corner-shape: superellipse(2);
-  letter-spacing: 1px;
+  border-radius: var(--radius-pill);
+  corner-shape: var(--squircle);
+  letter-spacing: var(--ls-base);
   text-transform: uppercase;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--t-base),
+    box-shadow var(--t-base);
   cursor: pointer;
   border: none;
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-white {
@@ -205,8 +331,8 @@ h3,
 
 .btn:disabled,
 .btn.btn-disabled {
-  background: #ccc;
-  color: #888;
+  background: var(--grey-200);
+  color: var(--grey-500);
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -218,38 +344,36 @@ h3,
 }
 
 .about-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
-  position: relative;
-  z-index: 2;
+  gap: var(--sp-7);
   text-align: center;
 }
 
-.about-text {
-  max-width: 600px;
+.about-text,
+.join-text {
+  max-width: var(--measure);
 }
 
-.about-text h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
+.about-text h2,
+.join-text h2 {
+  margin-bottom: var(--sp-5);
 }
 
-.about-text p {
-  font-size: 1.15rem;
-  line-height: 1.8;
+.about-text p,
+.join-text p {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
 }
 
-.about-text p + p {
-  margin-top: 1rem;
+.about-text p + p,
+.join-text p + p {
+  margin-top: var(--sp-4);
 }
 
-.about-visual {
+.about-visual,
+.join-visual {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -260,15 +384,15 @@ h3,
 .carousel {
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: var(--content-narrow);
   overflow: hidden;
-  border-radius: 20px;
-  corner-shape: superellipse(2);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--squircle);
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.4s ease;
+  transition: transform var(--t-slow);
 }
 
 .carousel-track img {
@@ -292,12 +416,12 @@ h3,
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  font-size: 1.4rem;
+  font-size: var(--fs-xl);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  transition: background var(--t-base);
   z-index: 3;
 }
 
@@ -306,20 +430,20 @@ h3,
 }
 
 .carousel-prev {
-  left: 0.5rem;
+  left: var(--sp-2);
 }
 
 .carousel-next {
-  right: 0.5rem;
+  right: var(--sp-2);
 }
 
 .carousel-dots {
   position: absolute;
-  bottom: 0.75rem;
+  bottom: var(--sp-3);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.4rem;
+  gap: var(--sp-2);
   z-index: 3;
 }
 
@@ -327,11 +451,11 @@ h3,
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--border-strong);
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: background 0.2s ease;
+  transition: background var(--t-base);
 }
 
 .carousel-dot.active {
@@ -345,70 +469,28 @@ h3,
 }
 
 .join-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
-  position: relative;
-  z-index: 2;
+  gap: var(--sp-7);
   text-align: center;
-}
-
-.join-text {
-  max-width: 600px;
-}
-
-.join-text h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
-}
-
-.join-text p {
-  font-size: 1.15rem;
-  line-height: 1.8;
-}
-
-.join-text p + p {
-  margin-top: 1rem;
-}
-
-.join-visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
 }
 
 /* program */
 .program {
   background: var(--white);
   color: var(--black);
-  /* align-items: flex-start; */
-}
-
-.program-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
-  width: 100%;
-  position: relative;
-  z-index: 2;
 }
 
 .program-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--sp-4);
   color: var(--red);
 }
 
 .program-grid {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--sp-5);
   align-items: flex-start;
 }
 
@@ -417,32 +499,31 @@ h3,
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--sp-4);
   align-self: flex-start;
 }
 
 .program-location {
   font-family: "Luckiest Guy", cursive;
-  font-size: 1.3rem;
-  color: var(--teal);
-  padding: 0.75rem 1rem;
+  font-size: var(--fs-xl);
+  padding: var(--sp-3) var(--sp-4);
   background: var(--black);
   color: var(--white);
-  border-radius: 14px;
-  corner-shape: superellipse(2);
+  border-radius: var(--radius-md);
+  corner-shape: var(--squircle);
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-base);
 }
 
 .program-card {
   background: var(--white);
   border: 3px solid var(--black);
-  border-radius: 20px;
-  corner-shape: superellipse(2);
-  padding: 2rem;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--squircle);
+  padding: var(--sp-6);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--t-base),
+    box-shadow var(--t-base);
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -455,19 +536,19 @@ h3,
 
 .program-card-time {
   font-family: "Luckiest Guy", cursive;
-  font-size: 1rem;
+  font-size: var(--fs-md);
   color: var(--teal);
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
+  margin-bottom: var(--sp-2);
+  letter-spacing: var(--ls-base);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--sp-2);
 }
 
 .program-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--fs-xl);
+  margin-bottom: var(--sp-2);
   color: var(--red);
 }
 
@@ -480,27 +561,27 @@ h3,
   max-height: 0;
   overflow: hidden;
   transition:
-    max-height 0.3s ease,
-    margin-top 0.3s ease;
+    max-height var(--t-slow),
+    margin-top var(--t-slow);
   margin-top: 0;
 }
 
 .program-card.active .program-card-body {
   max-height: 200px;
-  margin-top: 0.75rem;
+  margin-top: var(--sp-3);
 }
 
 .program-card p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #444;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--grey-700);
 }
 
 .program-card-host {
-  font-size: 0.85rem;
+  font-size: var(--fs-xs);
   color: var(--teal);
   font-weight: 700;
-  margin-top: 0.5rem;
+  margin-top: var(--sp-2);
 }
 
 .program-card-tag {
@@ -508,59 +589,438 @@ h3,
   background: var(--gold);
   color: var(--black);
   font-family: "Luckiest Guy", cursive;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  corner-shape: superellipse(2);
-  letter-spacing: 1px;
+  font-size: var(--fs-xs);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-pill);
+  corner-shape: var(--squircle);
+  letter-spacing: var(--ls-base);
   white-space: nowrap;
 }
 
 .program-illustration {
-  position: absolute;
   right: 2%;
   bottom: 2%;
-  width: 25vw;
-  max-width: 300px;
-  z-index: 1;
-  pointer-events: none;
 }
 
 /* dealers */
 .dealers {
   background: var(--red);
   color: var(--white);
-  /* align-items: flex-start; */
-}
-
-.dealers-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
-  width: 100%;
-  position: relative;
-  z-index: 2;
 }
 
 .dealers-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--sp-4);
 }
 
-.dealers-grid {
+/* dealer's den map */
+.denmap {
   display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
+  gap: var(--sp-6);
+  align-items: stretch;
+  margin-top: var(--sp-6);
 }
 
-.dealers-grid .program-card {
+.denmap-plan {
+  flex: 0 0 var(--denmap-plan-w);
+  align-self: flex-start;
   background: var(--white);
-  color: var(--black);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--squircle);
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+  box-shadow: var(--shadow-lg);
 }
 
-.dealers-grid .program-card h3 {
+.denmap-plan-inner {
+  position: relative;
+}
+
+.denmap-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.denmap-stall {
+  cursor: pointer;
+}
+
+.denmap-stall-shape {
+  fill: var(--teal);
+  stroke: var(--black);
+  stroke-width: 0.6;
+  transition:
+    fill var(--t-fast),
+    opacity var(--t-fast);
+}
+
+/* rozmiary wewnątrz SVG są w jednostkach viewBox, nie w skali strony */
+.denmap-stall-label {
+  font-family: "Luckiest Guy", cursive;
+  font-size: 5.4px;
+  fill: var(--white);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+  transition: fill var(--t-fast);
+}
+
+.denmap-stall:hover .denmap-stall-shape,
+.denmap-stall.hovered .denmap-stall-shape {
+  fill: var(--teal-dark);
+}
+
+.denmap-stall.selected .denmap-stall-shape {
+  fill: var(--red);
+  stroke-width: 1.2;
+}
+
+.denmap-stall.dimmed .denmap-stall-shape {
+  fill: var(--grey-200);
+}
+
+.denmap-stall.dimmed .denmap-stall-label {
+  fill: var(--grey-500);
+}
+
+.denmap-stall:focus {
+  outline: none;
+}
+
+.denmap-stall:focus-visible .denmap-stall-shape {
+  stroke: var(--gold);
+  stroke-width: 1.6;
+}
+
+.denmap-tooltip {
+  position: absolute;
+  z-index: 5;
+  padding: var(--sp-1) var(--sp-2);
+  background: var(--black);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  white-space: nowrap;
+  transform: translate(-50%, -130%);
+  box-shadow: var(--shadow-sm);
+}
+
+.denmap-entrance {
+  margin-top: var(--sp-2);
   text-align: center;
+  color: var(--black);
+  font-family: "Luckiest Guy", cursive;
+  font-size: var(--fs-md);
+  letter-spacing: var(--ls-base);
+}
+
+.denmap-entrance span {
+  color: var(--green);
+}
+
+/* kolumna z listą rozciąga się na wysokość planu, a panel opisu ma stałą
+   wysokość - dzięki temu wybór innego wystawcy nie przesuwa listy */
+.denmap-side {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.denmap-search {
+  flex: 0 0 auto;
+  width: 100%;
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  border: 3px solid var(--white);
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  color: var(--white);
+  font-family: inherit;
+  font-size: var(--fs-md);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.denmap-search::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.denmap-search:focus {
+  background: var(--surface-strong);
+  border-color: var(--gold);
+}
+
+/* domyślny krzyżyk czyszczenia jest ciemny i gubi się na czerwonym tle,
+   więc rysujemy własny maską w kolorze tekstu */
+.denmap-search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  background: var(--white);
+  -webkit-mask: var(--icon-close) center / contain no-repeat;
+  mask: var(--icon-close) center / contain no-repeat;
+  transition: opacity var(--t-fast);
+}
+
+.denmap-search::-webkit-search-cancel-button:hover {
+  opacity: 0.7;
+}
+
+.denmap-detail {
+  flex: 0 0 var(--denmap-detail-h);
+  height: var(--denmap-detail-h);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--sp-4);
+  padding-right: var(--sp-2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.denmap-detail-number {
+  font-family: "Luckiest Guy", cursive;
+  font-size: var(--fs-md);
+  letter-spacing: var(--ls-base);
+  color: var(--gold);
+}
+
+.denmap-detail h3 {
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-base);
+  margin: var(--sp-1) 0 var(--sp-2);
+}
+
+.denmap-detail p {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+}
+
+/* linki wystawcy na końcu opisu */
+.denmap-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+
+.denmap-detail-link {
+  padding: var(--sp-1) var(--sp-3);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.denmap-detail-link:hover,
+.denmap-detail-link:focus-visible {
+  background: var(--white);
+  color: var(--red);
+  border-color: var(--white);
+}
+
+/* treść wychodząca poza panel wygasza się na krawędzi, po której da się
+   jeszcze przewinąć - zamiast urywać się w połowie wiersza */
+.is-clip-top {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-size)
+  );
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-size));
+}
+
+.is-clip-bottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--fade-size)),
+    transparent
+  );
+}
+
+.is-clip-top.is-clip-bottom {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-size),
+    #000 calc(100% - var(--fade-size)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-size),
+    #000 calc(100% - var(--fade-size)),
+    transparent
+  );
+}
+
+/* stoisko bez opisu - wyśrodkowana notka w wolnym miejscu panelu */
+.denmap-detail-empty {
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--sp-2) 0 var(--sp-4);
+  opacity: 0.8;
+}
+
+/* stan bez wyboru - wstęp do sekcji */
+.denmap-detail.is-intro {
+  justify-content: center;
+  overflow: hidden;
+}
+
+.denmap-intro {
+  text-align: center;
+}
+
+.denmap-intro p {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+}
+
+.denmap-intro-count {
+  font-family: "Luckiest Guy", cursive;
+  color: var(--gold);
+  letter-spacing: var(--ls-base);
+  line-height: var(--lh-tight);
+  margin: var(--sp-1) 0;
+}
+
+.denmap-intro .denmap-intro-count {
+  font-size: var(--fs-display);
+}
+
+.denmap-intro .denmap-intro-hint {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-sm);
+  opacity: 0.85;
+}
+
+.denmap-list {
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2);
+  flex: 1 1 0;
+  min-height: 12rem;
+  overflow-y: auto;
+  padding-right: var(--sp-2);
+  align-content: start;
+}
+
+/* pasek przewijania to sama zaokrąglona kreska - bez strzałek i tła */
+.denmap-list,
+.denmap-detail {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.denmap-list::-webkit-scrollbar,
+.denmap-detail::-webkit-scrollbar {
+  width: 6px;
+}
+
+.denmap-list::-webkit-scrollbar-button,
+.denmap-detail::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.denmap-list::-webkit-scrollbar-track,
+.denmap-detail::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.denmap-list::-webkit-scrollbar-thumb,
+.denmap-detail::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.denmap-list-empty {
+  grid-column: 1 / -1;
+  opacity: 0.85;
+  padding: var(--sp-2) var(--sp-1);
+}
+
+.denmap-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  border: 2px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  color: var(--white);
+  font-family: inherit;
+  font-size: var(--fs-md);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.denmap-chip:hover,
+.denmap-chip.hovered,
+.denmap-chip:focus-visible {
+  background: var(--surface-strong);
+  border-color: var(--white);
+  outline: none;
+}
+
+.denmap-chip.selected {
+  background: var(--white);
+  color: var(--red);
+  border-color: var(--white);
+}
+
+.denmap-chip-num {
+  flex: 0 0 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal);
+  color: var(--white);
+  font-family: "Luckiest Guy", cursive;
+  font-size: var(--fs-sm);
+}
+
+.denmap-chip.selected .denmap-chip-num {
+  background: var(--red);
+}
+
+.denmap-chip-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* tickets */
@@ -589,26 +1049,16 @@ h3,
   opacity: 0.55;
 }
 
-.tickets-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-}
-
 .tickets-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--sp-4);
 }
 
 .tickets-subtitle {
   text-align: center;
-  font-size: 1.15rem;
-  margin-bottom: 3rem;
-  max-width: 500px;
+  font-size: var(--fs-lg);
+  margin-bottom: var(--sp-7);
+  max-width: var(--measure-sm);
   justify-self: center;
 }
 
@@ -616,7 +1066,7 @@ h3,
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
+  gap: var(--sp-6);
 }
 
 .ticket-card {
@@ -624,15 +1074,15 @@ h3,
   background: var(--white);
   color: var(--black);
   border: 4px solid transparent;
-  border-radius: 24px;
-  corner-shape: superellipse(2);
-  padding: 2.5rem 2rem;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--squircle);
+  padding: var(--sp-6);
   text-align: center;
   position: relative;
   overflow: hidden;
   transition:
-    transform 0.1s ease,
-    border-color 0.1s ease;
+    transform var(--t-fast),
+    border-color var(--t-fast);
   display: flex;
   flex-direction: column;
 }
@@ -648,7 +1098,7 @@ h3,
 }
 
 .ticket-card .btn:not(:disabled):not(.btn-disabled):hover {
-  background: #d62d4c;
+  background: var(--red-dark);
   box-shadow: 0 8px 28px rgba(232, 56, 87, 0.45);
 }
 
@@ -659,7 +1109,7 @@ h3,
 }
 
 .ticket-card.featured .btn:not(:disabled):not(.btn-disabled):hover {
-  background: #eab84f;
+  background: var(--gold-dark);
   box-shadow: 0 8px 28px rgba(242, 199, 120, 0.55);
 }
 
@@ -699,42 +1149,42 @@ h3,
   background: var(--gold);
   color: var(--black);
   font-family: "Luckiest Guy", cursive;
-  font-size: 0.75rem;
-  padding: 0.4rem 1.2rem;
-  border-radius: 0 20px 0 16px;
-  corner-shape: superellipse(2);
-  letter-spacing: 1px;
+  font-size: var(--fs-xs);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: 0 var(--radius-lg) 0 var(--radius-md);
+  corner-shape: var(--squircle);
+  letter-spacing: var(--ls-base);
 }
 
 .ticket-card h3 {
-  font-size: 1.6rem;
+  font-size: var(--fs-2xl);
   color: var(--red);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--sp-2);
 }
 
 .ticket-price {
   font-family: "Luckiest Guy", cursive;
-  font-size: 2.8rem;
+  font-size: var(--fs-display);
   color: var(--teal);
-  margin: 1rem 0;
+  margin: var(--sp-4) 0;
 }
 
 .ticket-price span {
-  font-size: 1rem;
-  color: #888;
+  font-size: var(--fs-md);
+  color: var(--grey-500);
 }
 
 .ticket-features {
   list-style: none;
-  margin: 1.5rem 0;
+  margin: var(--sp-5) 0;
   text-align: left;
 }
 
 .ticket-features li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-  font-size: 0.95rem;
-  padding-left: 1.5rem;
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid var(--grey-100);
+  font-size: var(--fs-sm);
+  padding-left: var(--sp-5);
   position: relative;
 }
 
@@ -747,13 +1197,7 @@ h3,
 }
 
 .tickets-doodle {
-  position: absolute;
   left: 0;
-  bottom: 0;
-  width: 30vw;
-  max-width: 380px;
-  z-index: 1;
-  pointer-events: none;
   transform: scaleX(-1);
 }
 
@@ -764,18 +1208,17 @@ h3,
 }
 
 .faq-content {
-  max-width: 800px;
+  max-width: var(--content-narrow);
   margin: 0 auto;
-  padding: 6rem 2rem;
+  padding: var(--sp-section) var(--sp-6);
   width: 100%;
   position: relative;
   z-index: 2;
 }
 
 .faq-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--sp-7);
 }
 
 .faq-item {
@@ -784,21 +1227,21 @@ h3,
 }
 
 .faq-question {
-  padding: 1.5rem 0;
+  padding: var(--sp-5) 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: "Luckiest Guy", cursive;
-  font-size: 1.15rem;
-  letter-spacing: 0.5px;
+  font-size: var(--fs-lg);
+  letter-spacing: var(--ls-base);
 }
 
 .faq-question::after {
   content: "+";
-  font-size: 1.8rem;
-  transition: transform 0.3s ease;
+  font-size: var(--fs-3xl);
+  transition: transform var(--t-slow);
   flex-shrink: 0;
-  margin-left: 1rem;
+  margin-left: var(--sp-4);
 }
 
 .faq-item.active .faq-question::after {
@@ -809,25 +1252,19 @@ h3,
   max-height: 0;
   overflow: hidden;
   transition:
-    max-height 0.3s ease,
-    padding 0.3s ease;
-  font-size: 1.05rem;
-  line-height: 1.7;
+    max-height var(--t-slow),
+    padding var(--t-slow);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
 }
 
 .faq-item.active .faq-answer {
   max-height: 300px;
-  padding-bottom: 1.5rem;
+  padding-bottom: var(--sp-5);
 }
 
 .faq-illustration {
-  position: absolute;
   right: 0;
-  bottom: 0;
-  width: 25vw;
-  max-width: 300px;
-  z-index: 1;
-  pointer-events: none;
 }
 
 /* contact */
@@ -837,49 +1274,40 @@ h3,
 }
 
 .contact-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 6rem 2rem;
-  width: 100%;
   text-align: center;
-  position: relative;
-  z-index: 2;
 }
 
 .contact-content h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--sp-5);
 }
 
 .contact-content > p {
-  font-size: 1.15rem;
+  font-size: var(--fs-lg);
   opacity: 0.8;
-  margin-bottom: 3rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.7;
+  margin: 0 auto var(--sp-7);
+  max-width: var(--measure);
+  line-height: var(--lh-body);
 }
 
 .contact-socials {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: var(--sp-5);
+  margin-top: var(--sp-6);
 }
 
 .contact-socials a {
   color: var(--white);
-  font-size: 1rem;
+  font-size: var(--fs-md);
   font-weight: 700;
   text-decoration: none;
-  padding: 0.6rem 1.5rem;
+  padding: var(--sp-2) var(--sp-5);
   border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  corner-shape: superellipse(2);
-  transition: 0.2s ease;
+  border-radius: var(--radius-pill);
+  corner-shape: var(--squircle);
+  transition: var(--t-base);
   font-family: "Luckiest Guy", cursive;
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-base);
 }
 
 .contact-socials a:hover {
@@ -889,16 +1317,16 @@ h3,
 
 .footer {
   text-align: center;
-  padding: 2rem;
+  padding: var(--sp-6);
   background: var(--black);
   color: rgba(255, 255, 255, 0.4);
-  font-size: 0.85rem;
+  font-size: var(--fs-xs);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer img {
   height: 24px;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--sp-2);
   opacity: 0.4;
 }
 
@@ -907,8 +1335,8 @@ h3,
   opacity: 0;
   transform: translateY(30px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity var(--t-reveal),
+    transform var(--t-reveal);
 }
 
 .fade-in.visible {
@@ -921,22 +1349,22 @@ h3,
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
 }
 
 .badge-switch-btn {
   font-family: "Luckiest Guy", cursive;
-  font-size: 1rem;
-  padding: 0.7rem 1.8rem 0.5rem;
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-5) var(--sp-2);
   border: 3px solid var(--white);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--white);
   cursor: pointer;
   transition:
-    background 0.2s ease,
-    color 0.2s ease;
+    background var(--t-base),
+    color var(--t-base);
 }
 
 .badge-switch-btn:hover,
@@ -947,10 +1375,10 @@ h3,
 
 .badge-note {
   text-align: center;
-  max-width: 480px;
+  max-width: var(--measure-sm);
   min-height: 3em;
-  margin: -0.75rem auto 1.5rem;
-  font-size: 1rem;
+  margin: calc(var(--sp-3) * -1) auto var(--sp-5);
+  font-size: var(--fs-md);
   position: relative;
   z-index: 4;
 }
@@ -965,11 +1393,12 @@ h3,
   color: var(--white);
 }
 
+/* ujemne marginesy wciągają podgląd identyfikatora między przyciski i kafelki */
 .badge-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: var(--sp-6);
   margin-top: clamp(-4.5rem, -8.7vw, -1.875rem);
   margin-bottom: clamp(-4rem, -7.73vw, -1.67rem);
   position: relative;
@@ -988,6 +1417,11 @@ h3,
 
 /* mobile */
 @media (max-width: 1120px) {
+  :root {
+    --denmap-plan-w: 290px;
+    --denmap-detail-h: 13rem;
+  }
+
   .program-grid {
     flex-direction: column;
   }
@@ -1006,8 +1440,8 @@ h3,
     background: rgba(0, 0, 0, 0.96);
     flex-direction: column;
     justify-content: center;
-    padding: 2rem;
-    transition: right 0.3s ease;
+    padding: var(--sp-6);
+    transition: right var(--t-slow);
   }
 
   .nav-links.open {
@@ -1044,12 +1478,27 @@ h3,
     flex-wrap: wrap;
   }
 
-  .dealers-grid {
+  .denmap {
     flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-5);
+  }
+
+  .denmap-plan {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: var(--denmap-plan-w);
+    margin: 0 auto;
+  }
+
+  .denmap-list {
+    grid-template-columns: minmax(0, 1fr);
+    flex: 0 0 auto;
+    height: 20rem;
   }
 
   .faq-item.active .faq-answer {
     max-height: 500px;
-    padding-bottom: 1.5rem;
+    padding-bottom: var(--sp-5);
   }
 }
