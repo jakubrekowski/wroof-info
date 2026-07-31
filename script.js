@@ -325,7 +325,10 @@ const dealersList = [
     title: "Morimersmortuar & Rzygacz",
     lane: "D",
     row: 7,
-    links: ["https://www.instagram.com/morimersmortuar/"],
+    links: [
+      "https://linktr.ee/morimersmortuar",
+      "https://linktr.ee/mortalskull",
+    ],
     description:
       "W wyjątkowym collabie debiutują Mori Mer oraz Rzygacz! Razem przywozimy wam merch o stylistyce innej niż wszystkie! Spotkacie u nas realistyczne paintingi, stylizowane old schoolowe nadruki, urocze naklejki i co jeszcze? Potwory? Mamy! Anthro? Mamy! Piękne kobiety? Być może... Sam się przekonaj!",
   },
