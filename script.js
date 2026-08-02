@@ -220,7 +220,7 @@ const dealersList = [
   },
   {
     id: 14,
-    title: "Luna Art Foxlab",
+    title: "LunArtFox Lab",
     lane: "B",
     row: 3,
     description:
