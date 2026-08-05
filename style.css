@@ -91,6 +91,42 @@
   --fade-size: 2.5rem;
 }
 
+/*
+  Luckiest Guy zgłasza descent ~30%, a atrament kapitalików zajmuje ~1%.
+  Własna rodzina z nadpisanymi metrykami — box wyrównany do atramentu.
+*/
+@font-face {
+  font-family: "Luckiest Guy UI";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/luckiestguy/v25/_gP_1RrxsjcxVyin9l9n_j2hQ952ijl7aSqP.woff2")
+    format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  ascent-override: 75%;
+  descent-override: 12%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Luckiest Guy UI";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/luckiestguy/v25/_gP_1RrxsjcxVyin9l9n_j2hTd52ijl7aQ.woff2")
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+  ascent-override: 75%;
+  descent-override: 12%;
+  line-gap-override: 0%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -116,7 +152,21 @@ h2,
 h3,
 .nav-link,
 .btn {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
+}
+
+/*
+  Luckiest Guy ma atrament powyżej font-bounding-box — przycinamy
+  do cap-height / descenderów, żeby flex i padding centrowały optycznie.
+*/
+.nav-link,
+.btn,
+.nav-btn-gold,
+.contact-socials a,
+.badge-switch-btn,
+.program-location,
+.faq-question {
+  text-box: trim-both cap text;
 }
 
 /* nav */
@@ -160,6 +210,7 @@ h3,
   letter-spacing: var(--ls-base);
   transition: color var(--t-base);
   text-transform: uppercase;
+  line-height: 1;
 }
 
 .nav-link:hover {
@@ -167,6 +218,9 @@ h3,
 }
 
 .nav-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--gold);
   color: var(--black) !important;
   padding: var(--sp-2) var(--sp-4);
@@ -252,7 +306,7 @@ h3,
 }
 
 .hero-date {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-hero-date);
   color: var(--white);
   position: relative;
@@ -262,7 +316,7 @@ h3,
 
 .hero-subtitle {
   font-size: var(--fs-hero-sub);
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   position: relative;
@@ -304,9 +358,12 @@ h3,
 
 /* buttons */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--sp-4) var(--sp-6);
   font-size: var(--fs-lg);
+  line-height: 1;
   text-decoration: none;
   border-radius: var(--radius-pill);
   corner-shape: var(--squircle);
@@ -504,7 +561,7 @@ h3,
 }
 
 .program-location {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-xl);
   padding: var(--sp-3) var(--sp-4);
   background: var(--black);
@@ -535,7 +592,7 @@ h3,
 }
 
 .program-card-time {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-md);
   color: var(--teal);
   margin-bottom: var(--sp-2);
@@ -588,7 +645,7 @@ h3,
   display: inline-block;
   background: var(--gold);
   color: var(--black);
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-xs);
   padding: var(--sp-1) var(--sp-3);
   border-radius: var(--radius-pill);
@@ -657,7 +714,7 @@ h3,
 
 /* rozmiary wewnątrz SVG są w jednostkach viewBox, nie w skali strony */
 .denmap-stall-label {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: 5.4px;
   fill: var(--white);
   text-anchor: middle;
@@ -713,7 +770,7 @@ h3,
   margin-top: var(--sp-2);
   text-align: center;
   color: var(--black);
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-md);
   letter-spacing: var(--ls-base);
 }
@@ -786,7 +843,7 @@ h3,
 }
 
 .denmap-detail-number {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-md);
   letter-spacing: var(--ls-base);
   color: var(--gold);
@@ -900,7 +957,7 @@ h3,
 }
 
 .denmap-intro-count {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   color: var(--gold);
   letter-spacing: var(--ls-base);
   line-height: var(--lh-tight);
@@ -1008,7 +1065,7 @@ h3,
   border-radius: 50%;
   background: var(--teal);
   color: var(--white);
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-sm);
 }
 
@@ -1148,7 +1205,7 @@ h3,
   right: 0;
   background: var(--gold);
   color: var(--black);
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-xs);
   padding: var(--sp-2) var(--sp-4);
   border-radius: 0 var(--radius-lg) 0 var(--radius-md);
@@ -1163,7 +1220,7 @@ h3,
 }
 
 .ticket-price {
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-display);
   color: var(--teal);
   margin: var(--sp-4) 0;
@@ -1231,7 +1288,7 @@ h3,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-lg);
   letter-spacing: var(--ls-base);
 }
@@ -1297,16 +1354,20 @@ h3,
 }
 
 .contact-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--white);
   font-size: var(--fs-md);
   font-weight: 700;
+  line-height: 1;
   text-decoration: none;
   padding: var(--sp-2) var(--sp-5);
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-pill);
   corner-shape: var(--squircle);
   transition: var(--t-base);
-  font-family: "Luckiest Guy", cursive;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   letter-spacing: var(--ls-base);
 }
 
@@ -1354,9 +1415,13 @@ h3,
 }
 
 .badge-switch-btn {
-  font-family: "Luckiest Guy", cursive;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
   font-size: var(--fs-md);
-  padding: var(--sp-3) var(--sp-5) var(--sp-2);
+  line-height: 1;
+  padding: var(--sp-3) var(--sp-5);
   border: 3px solid var(--white);
   border-radius: var(--radius-pill);
   background: transparent;
