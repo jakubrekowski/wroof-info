@@ -885,37 +885,75 @@ if (carousel) {
 const BADGE_TEXTURES = {
   sponsor: {
     suiter: {
-      fg: "./badge/suiter-sponsor-fg.png",
-      bg: "./badge/suiter-sponsor-bg.png",
+      fg: "/badge/suiter-sponsor-fg.png",
+      bg: "/badge/suiter-sponsor-bg.png",
     },
     attendee: {
-      fg: "./badge/attendee-sponsor-fg.png",
-      bg: "./badge/attendee-sponsor-bg.png",
+      fg: "/badge/attendee-sponsor-fg.png",
+      bg: "/badge/attendee-sponsor-bg.png",
     },
     // helper badges are sponsor-only
     helper: {
-      fg: "./badge/helper-fg.png",
-      bg: "./badge/helper-bg.png",
+      fg: "/badge/helper-fg.png",
+      bg: "/badge/helper-bg.png",
     },
   },
   standard: {
-    suiter: "./badge/suiter.png",
-    attendee: "./badge/attendee.png",
+    suiter: "/badge/suiter.png",
+    attendee: "/badge/attendee.png",
   },
 };
 
 const badgeTextureLoader = new THREE.TextureLoader();
 const badgeTextureCache = new Map();
+const badgeTextureWaiters = new Map();
+
+function configureBadgeTexture(texture) {
+  // r128 uses encoding; keep the print colors in display space
+  if ("encoding" in texture && THREE.sRGBEncoding !== undefined) {
+    texture.encoding = THREE.sRGBEncoding;
+  }
+  texture.anisotropy = 4;
+  texture.needsUpdate = true;
+}
+
 function loadBadgeTexture(url) {
   if (!badgeTextureCache.has(url)) {
-    badgeTextureCache.set(
+    const waiters = new Set();
+    badgeTextureWaiters.set(url, waiters);
+    const texture = badgeTextureLoader.load(
       url,
-      badgeTextureLoader.load(url, undefined, undefined, () => {
+      (loaded) => {
+        configureBadgeTexture(loaded);
+        waiters.forEach((fn) => fn(loaded));
+        waiters.clear();
+      },
+      undefined,
+      () => {
         console.error(`Failed to load badge texture: ${url}`);
-      }),
+        waiters.clear();
+      },
     );
+    configureBadgeTexture(texture);
+    badgeTextureCache.set(url, texture);
   }
   return badgeTextureCache.get(url);
+}
+
+function bindBadgeTexture(material, url) {
+  const texture = loadBadgeTexture(url);
+  material.map = texture;
+  material.needsUpdate = true;
+  if (texture.image && texture.image.width) return texture;
+
+  const waiters = badgeTextureWaiters.get(url);
+  if (waiters) {
+    waiters.add(() => {
+      material.map = texture;
+      material.needsUpdate = true;
+    });
+  }
+  return texture;
 }
 
 function createRoundedRectShape(width, height, radius) {
@@ -956,7 +994,7 @@ function initBadgePreview(containerId, initialKind, initialType) {
     return;
   }
 
-  let width = container.clientWidth;
+  let width = container.clientWidth || 1;
   let height = container.clientHeight || 500;
 
   const scene = new THREE.Scene();
@@ -964,6 +1002,9 @@ function initBadgePreview(containerId, initialKind, initialType) {
   camera.position.set(0, 0, 12);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  if (THREE.sRGBEncoding !== undefined) {
+    renderer.outputEncoding = THREE.sRGBEncoding;
+  }
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
@@ -1001,6 +1042,8 @@ function initBadgePreview(containerId, initialKind, initialType) {
     const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
     geometry.center();
 
+    // r128 MeshPhysicalMaterial supports transmission but not thickness;
+    // keep the acrylic look without unsupported props that Three warns about.
     const slabMaterial =
       kind === "sponsor"
         ? new THREE.MeshPhysicalMaterial({
@@ -1008,17 +1051,18 @@ function initBadgePreview(containerId, initialKind, initialType) {
             metalness: 0.1,
             roughness: 0.05,
             transmission: 0.9,
-            ior: 1.5,
-            thickness: badgeDepth,
             transparent: true,
             opacity: 1,
+            depthWrite: true,
           })
         : new THREE.MeshStandardMaterial({
             color: 0xffffff,
             metalness: 0,
             roughness: 0.45,
           });
-    group.add(new THREE.Mesh(geometry, slabMaterial));
+    const slabMesh = new THREE.Mesh(geometry, slabMaterial);
+    slabMesh.renderOrder = 1;
+    group.add(slabMesh);
 
     const printWidth = badgeWidth;
     const printHeight = badgeHeight;
@@ -1035,41 +1079,55 @@ function initBadgePreview(containerId, initialKind, initialType) {
         printPositions.getY(i) / printHeight + 0.5,
       );
     }
+    printUVs.needsUpdate = true;
 
     // the bevel pushes the slab face out by bevelThickness on each side
     const printZ = badgeDepth / 2 + badgeBevel + 0.005;
 
+    // alphaTest avoids transparent-sort fights with the acrylic slab so the
+    // artwork stays visible at every orbit angle
     const printMaterials = [];
 
     if (kind === "sponsor") {
       const bgMaterial = new THREE.MeshBasicMaterial({
         transparent: true,
+        alphaTest: 0.05,
+        depthWrite: true,
         side: THREE.DoubleSide,
       });
       const bgMesh = new THREE.Mesh(printGeometry, bgMaterial);
       bgMesh.position.z = -printZ;
+      bgMesh.renderOrder = 0;
       group.add(bgMesh);
 
       const fgMaterial = new THREE.MeshBasicMaterial({
         transparent: true,
-        depthWrite: false,
+        alphaTest: 0.05,
+        depthWrite: true,
         side: THREE.DoubleSide,
       });
       const fgMesh = new THREE.Mesh(printGeometry, fgMaterial);
       fgMesh.position.z = printZ;
+      fgMesh.renderOrder = 2;
       group.add(fgMesh);
 
       printMaterials.push(bgMaterial, fgMaterial);
     } else {
-      const printMaterial = new THREE.MeshBasicMaterial({ transparent: true });
+      const printMaterial = new THREE.MeshBasicMaterial({
+        transparent: true,
+        alphaTest: 0.05,
+        depthWrite: true,
+      });
 
       const frontMesh = new THREE.Mesh(printGeometry, printMaterial);
       frontMesh.position.z = printZ;
+      frontMesh.renderOrder = 2;
       group.add(frontMesh);
 
       const backMesh = new THREE.Mesh(printGeometry, printMaterial);
       backMesh.position.z = -printZ;
       backMesh.rotation.y = Math.PI;
+      backMesh.renderOrder = 2;
       group.add(backMesh);
 
       printMaterials.push(printMaterial);
@@ -1080,14 +1138,11 @@ function initBadgePreview(containerId, initialKind, initialType) {
       if (!textures) return;
       if (kind === "sponsor") {
         const [bgMaterial, fgMaterial] = printMaterials;
-        bgMaterial.map = loadBadgeTexture(textures.bg);
-        fgMaterial.map = loadBadgeTexture(textures.fg);
+        bindBadgeTexture(bgMaterial, textures.bg);
+        bindBadgeTexture(fgMaterial, textures.fg);
       } else {
-        printMaterials[0].map = loadBadgeTexture(textures);
+        bindBadgeTexture(printMaterials[0], textures);
       }
-      printMaterials.forEach((material) => {
-        material.needsUpdate = true;
-      });
     }
 
     return { group, applyType, totalDepth: badgeDepth + badgeBevel * 2 };
@@ -1326,7 +1381,7 @@ function initBadgePreview(containerId, initialKind, initialType) {
     height = container.clientHeight;
     if (!width || !height) return;
 
-    camera.aspect = width / height;
+    camera.aspect = width / Math.max(height, 1);
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
   };

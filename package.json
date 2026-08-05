@@ -2,6 +2,6 @@
   "name": "wroof-info",
   "private": true,
   "scripts": {
-    "dev": "bun --hot index.html"
+    "dev": "bun --hot dev-server.ts"
   }
 }

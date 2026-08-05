@@ -582,17 +582,31 @@ h3,
 .program {
   background: var(--white);
   color: var(--black);
+  min-height: auto;
+}
+
+.program-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  padding-top: calc(var(--sp-section) + var(--sp-4));
 }
 
 .program-content h2 {
   text-align: center;
-  margin-bottom: var(--sp-4);
+  margin-bottom: 0;
   color: var(--red);
+}
+
+.program-content .tickets-subtitle {
+  margin-bottom: 0;
+  max-width: var(--measure-sm);
+  margin-inline: auto;
 }
 
 .program-grid {
   display: flex;
-  gap: var(--sp-5);
+  gap: var(--sp-4);
   align-items: flex-start;
 }
 
@@ -601,14 +615,14 @@ h3,
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--sp-4);
+  gap: var(--sp-3);
   align-self: flex-start;
 }
 
 .program-location {
   font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
-  font-size: var(--fs-xl);
-  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-lg);
+  padding: var(--sp-2) var(--sp-3);
   background: var(--black);
   color: var(--white);
   border-radius: var(--radius-md);
@@ -622,7 +636,7 @@ h3,
   border: 3px solid var(--black);
   border-radius: var(--radius-lg);
   corner-shape: var(--squircle);
-  padding: var(--sp-6);
+  padding: var(--sp-5);
   transition:
     transform var(--t-base),
     box-shadow var(--t-base);
@@ -638,9 +652,9 @@ h3,
 
 .program-card-time {
   font-family: "Luckiest Guy UI", "Luckiest Guy", cursive;
-  font-size: var(--fs-md);
+  font-size: var(--fs-sm);
   color: var(--teal);
-  margin-bottom: var(--sp-2);
+  margin-bottom: var(--sp-1);
   letter-spacing: var(--ls-base);
   display: flex;
   align-items: center;
@@ -649,8 +663,8 @@ h3,
 }
 
 .program-card h3 {
-  font-size: var(--fs-xl);
-  margin-bottom: var(--sp-2);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--sp-1);
   color: var(--red);
 }
 
@@ -670,7 +684,7 @@ h3,
 
 .program-card.active .program-card-body {
   max-height: 200px;
-  margin-top: var(--sp-3);
+  margin-top: var(--sp-2);
 }
 
 .program-card p {
@@ -1307,6 +1321,8 @@ h3,
 .faq {
   background: var(--white);
   color: var(--black);
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 .faq-content {
@@ -1611,4 +1627,8 @@ h3,
     max-height: 500px;
     padding-bottom: var(--sp-5);
   }
+}
+
+#badge-note-helper {
+  margin-bottom: 4rem;
 }
