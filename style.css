@@ -399,6 +399,7 @@ h3,
 .about {
   background: var(--teal);
   color: var(--white);
+  min-height: auto;
 }
 
 .about-content {
@@ -430,7 +431,6 @@ h3,
   margin-top: var(--sp-4);
 }
 
-.about-visual,
 .join-visual {
   display: flex;
   justify-content: center;
@@ -439,13 +439,28 @@ h3,
 }
 
 /* Carousel */
+.carousel-section {
+  min-height: auto;
+  padding: 0;
+  align-items: stretch;
+}
+
 .carousel {
   position: relative;
   width: 100%;
-  max-width: var(--content-narrow);
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  corner-shape: var(--squircle);
+}
+
+.carousel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 45%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 18%),
+    linear-gradient(to left, rgba(0, 0, 0, 0.4) 0%, transparent 18%);
 }
 
 .carousel-track {
@@ -457,7 +472,7 @@ h3,
   width: 100%;
   max-width: none;
   flex-shrink: 0;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 21 / 9;
   object-fit: cover;
   filter: none;
   pointer-events: none;
@@ -471,10 +486,11 @@ h3,
   background: rgba(0, 0, 0, 0.5);
   color: var(--white);
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  font-size: var(--fs-xl);
+  font-size: 2rem;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -488,26 +504,26 @@ h3,
 }
 
 .carousel-prev {
-  left: var(--sp-2);
+  left: 2.5rem;
 }
 
 .carousel-next {
-  right: var(--sp-2);
+  right: 2.5rem;
 }
 
 .carousel-dots {
   position: absolute;
-  bottom: var(--sp-3);
+  bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: var(--sp-2);
+  gap: var(--sp-3);
   z-index: 3;
 }
 
 .carousel-dot {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--border-strong);
   border: none;
