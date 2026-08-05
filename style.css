@@ -141,6 +141,35 @@ body {
   font-family: "Lato", Arial, sans-serif;
   color: var(--black);
   overflow-x: hidden;
+  hyphens: none;
+}
+
+p,
+li,
+dd,
+dt,
+blockquote,
+figcaption,
+.about-text,
+.join-text,
+.program-card-body,
+.faq-answer,
+.badge-note,
+.denmap-intro,
+.denmap-detail,
+.ticket-features {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.program-location,
+.program-card-header h3 {
+  text-wrap: balance;
 }
 
 a {

@@ -14,6 +14,169 @@ function formatHosts(hosts) {
   return `${prefix}: ${names}`;
 }
 
+const POLISH_TYPOGRAPHY_SELECTOR =
+  "p, li, dd, dt, blockquote, figcaption, .badge-note, .program-card-body, .program-card-host, .faq-answer, .denmap-intro, .denmap-detail, .about-text, .join-text, .ticket-card";
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const POLISH_ORPHAN_WORDS = [
+  "albo",
+  "bez",
+  "bym",
+  "byś",
+  "by",
+  "ci",
+  "co",
+  "czy",
+  "dla",
+  "do",
+  "gdy",
+  "go",
+  "i",
+  "ja",
+  "już",
+  "ku",
+  "lub",
+  "ma",
+  "mi",
+  "mu",
+  "na",
+  "nad",
+  "niż",
+  "ni",
+  "od",
+  "oraz",
+  "po",
+  "pod",
+  "przed",
+  "się",
+  "ta",
+  "te",
+  "to",
+  "tu",
+  "ty",
+  "tym",
+  "we",
+  "wę",
+  "w",
+  "za",
+  "ze",
+  "że",
+  "a",
+  "o",
+  "u",
+  "z",
+  "bo",
+  "też",
+  "więc",
+].sort((a, b) => b.length - a.length);
+
+const POLISH_ORPHAN_PATTERN = new RegExp(
+  `(\\s)(${POLISH_ORPHAN_WORDS.map(escapeRegExp).join("|")})(\\s+)`,
+  "gi",
+);
+
+function getTypographyTextNodes(element) {
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const tag = node.parentElement?.tagName;
+      if (tag === "SCRIPT" || tag === "STYLE") return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  return nodes;
+}
+
+function fixPolishOrphansInText(text) {
+  return text.replace(POLISH_ORPHAN_PATTERN, (_, before, word, after) => {
+    return `${before}${word}\u00A0${after.replace(/^\s+/, "")}`;
+  });
+}
+
+function fixPolishOrphansAcrossNodes(nodes) {
+  const orphanEndPattern = new RegExp(
+    `(\\s)(${POLISH_ORPHAN_WORDS.map(escapeRegExp).join("|")})\\s*$`,
+    "i",
+  );
+
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const current = nodes[i].nodeValue;
+    const next = nodes[i + 1].nodeValue;
+    if (!orphanEndPattern.test(current) || !/^\s+\S/.test(next)) continue;
+
+    nodes[i + 1].nodeValue = next.replace(/^\s/, "\u00A0");
+  }
+}
+
+function fixPolishOrphans(element) {
+  const nodes = getTypographyTextNodes(element).filter((node) =>
+    node.nodeValue.trim(),
+  );
+  if (!nodes.length) return;
+
+  nodes.forEach((node) => {
+    node.nodeValue = fixPolishOrphansInText(node.nodeValue);
+  });
+  fixPolishOrphansAcrossNodes(nodes);
+}
+
+function fixPolishWidow(element) {
+  const nodes = getTypographyTextNodes(element).filter((node) =>
+    node.nodeValue.trim(),
+  );
+  if (nodes.length === 0) return;
+
+  const combined = nodes.map((node) => node.nodeValue).join("");
+  const words = combined.trim().split(/\s+/);
+  if (words.length < 2) return;
+
+  const penultimate = words[words.length - 2];
+  const ultimate = words[words.length - 1];
+  const matches = [
+    ...combined.matchAll(
+      new RegExp(
+        `${escapeRegExp(penultimate)}(\\s+)${escapeRegExp(ultimate)}(?!\\S)`,
+        "g",
+      ),
+    ),
+  ];
+  if (!matches.length) return;
+
+  const match = matches[matches.length - 1];
+  const spaceStart = match.index + penultimate.length;
+  const spaceEnd = spaceStart + match[1].length;
+
+  let offset = 0;
+  for (const node of nodes) {
+    const len = node.nodeValue.length;
+    const nodeEnd = offset + len;
+
+    if (spaceStart >= offset && spaceStart < nodeEnd) {
+      const localStart = spaceStart - offset;
+      const localEnd = Math.min(spaceEnd - offset, len);
+      node.nodeValue =
+        node.nodeValue.slice(0, localStart) +
+        "\u00A0" +
+        node.nodeValue.slice(localEnd);
+      return;
+    }
+
+    offset = nodeEnd;
+  }
+}
+
+function applyPolishTypography(root = document.body) {
+  root.querySelectorAll(POLISH_TYPOGRAPHY_SELECTOR).forEach((block) => {
+    fixPolishOrphans(block);
+    fixPolishWidow(block);
+  });
+}
+
 function renderProgram(events, containerId = "programGrid") {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -61,6 +224,8 @@ function renderProgram(events, containerId = "programGrid") {
       if (!wasActive) card.classList.add("active");
     });
   });
+
+  applyPolishTypography(container);
 }
 
 const programLocations = {
@@ -484,6 +649,7 @@ function renderDealerDen(dealers) {
       // wstęp zawsze mieści się w panelu, więc nie ma czego wygaszać
       detail.classList.remove("is-clip-top", "is-clip-bottom");
       detail.innerHTML = intro;
+      applyPolishTypography(detail);
       return;
     }
     detail.innerHTML = `
@@ -507,6 +673,7 @@ function renderDealerDen(dealers) {
           : ""
       }
     `;
+    applyPolishTypography(detail);
     updateScrollFade(detail);
   }
 
@@ -661,6 +828,7 @@ document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
 
 renderProgram(programEvents);
 renderDealerDen(dealersList);
+applyPolishTypography();
 
 const carousel = document.querySelector(".carousel");
 if (carousel) {
