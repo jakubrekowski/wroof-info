@@ -1401,7 +1401,7 @@ h3,
 }
 
 .merch-shirt {
-  width: min(100%, 616px);
+  width: min(100%, 672px);
   height: auto;
   display: block;
   border-radius: var(--radius-lg);
@@ -1736,7 +1736,7 @@ h3,
   }
 
   .merch-shirt {
-    width: min(100%, 418px);
+    width: min(100%, 456px);
   }
 
   .denmap {
