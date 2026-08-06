@@ -472,14 +472,19 @@ h3,
 /* Carousel */
 .carousel-section {
   min-height: auto;
-  padding: 0;
-  align-items: stretch;
+  padding: var(--sp-section) 0 0;
+  align-items: center;
+  justify-content: center;
+  background: var(--teal);
 }
 
 .carousel {
   position: relative;
-  width: 100%;
+  width: 50%;
+  max-width: 100%;
+  margin: 0 auto;
   overflow: hidden;
+  border-radius: var(--radius-lg);
 }
 
 .carousel::after {
@@ -503,7 +508,7 @@ h3,
   width: 100%;
   max-width: none;
   flex-shrink: 0;
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   filter: none;
   pointer-events: none;
@@ -535,16 +540,16 @@ h3,
 }
 
 .carousel-prev {
-  left: 2.5rem;
+  left: 1.25rem;
 }
 
 .carousel-next {
-  right: 2.5rem;
+  right: 1.25rem;
 }
 
 .carousel-dots {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
