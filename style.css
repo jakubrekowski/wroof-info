@@ -1535,7 +1535,7 @@ h3,
   text-align: center;
   max-width: var(--measure-sm);
   min-height: 3em;
-  margin: calc(var(--sp-3) * -1) auto var(--sp-5);
+  margin: calc(var(--sp-3) * -1) auto calc(var(--sp-5) + 1.5rem);
   font-size: var(--fs-md);
   position: relative;
   z-index: 4;
@@ -1551,14 +1551,14 @@ h3,
   color: var(--white);
 }
 
-/* ujemne marginesy wciągają podgląd identyfikatora między przyciski i kafelki */
+/* ujemny margin-top wciąga podgląd pod opis; dolny odstęp od kafelków */
 .badge-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--sp-6);
   margin-top: clamp(-4.5rem, -8.7vw, -1.875rem);
-  margin-bottom: clamp(-4rem, -7.73vw, -1.67rem);
+  margin-bottom: 1.5rem;
   position: relative;
   z-index: 3;
 }
